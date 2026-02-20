@@ -1,0 +1,58 @@
+<nav class="navbar navbar-expand-lg colorful-navbar" >
+  <div class="container">
+    <a class="navbar-brand text-white fw-bold" >DHEVINS TECH</a>
+
+    <button class="navbar-toggler" type="button" data-bs-toggle="collapse"
+      data-bs-target="#navbarNav">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+
+    <div class="collapse navbar-collapse justify-content-end" id="navbarNav">
+      <div class="navbar-nav align-items-center">
+        <a href="/admin/" class="btn btn-admin">Admin</a>
+      </div>
+    </div>
+  </div>
+</nav>
+
+<style>
+ /* 🌈 Gradient Navbar Background */
+.colorful-navbar {
+    background: linear-gradient(135deg, #ff6a00, #ee0979, #00c6ff);
+    background-size: 300% 300%;
+    animation: gradientMove 6s ease infinite;
+    padding: 30px ;
+}
+
+/* Gradient Animation */
+@keyframes gradientMove {
+    0% { background-position: 0% 50%; }
+    50% { background-position: 100% 50%; }
+    100% { background-position: 0% 50%; }
+}
+
+/* Brand Styling */
+.navbar-brand {
+    font-size: 35px;
+    letter-spacing: 5.5px;
+
+}
+
+/* 🌟 Admin Button */
+.btn-admin {
+    background: white;
+    color: #ee0979;
+    padding: 8px 22px;
+    border-radius: 30px;
+    font-weight: 600;
+    transition: 0.3s ease;
+}
+
+.btn-admin:hover {
+    background: #000;
+    color: #fff;
+    transform: scale(1.05);
+}
+
+
+</style>

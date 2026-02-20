@@ -1,0 +1,122 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+<div class="container-fluid my-5" style="width:95%;">
+
+
+
+  <!-- Page Header -->
+  <div class="d-flex justify-content-between align-items-center mb-4">
+    <h2 class="fw-bold text-dark">Work Details</h2>
+    <a href="{% url 'add_workdetail' %}" class="btn btn-success shadow-sm">
+      + Add Work
+    </a>
+  </div>
+  
+
+  <!-- Card Wrapper -->
+  <div class="card shadow-lg border-0 rounded-4">
+    <div class="card-body p-4">
+
+      <div class="table-responsive">
+        <table class="table table-hover align-middle text-center">
+
+          <thead class="table-dark">
+            <tr>
+              <th>Date</th>
+              <th>Labour</th>
+              <th>Vendor</th>
+              <th>Site</th>
+              <th>Work Details</th>
+              <th>Material</th>
+              <th>Check In</th>
+              <th>Check Out</th>
+              <th>Actions</th>
+            </tr>
+          </thead>
+
+          <tbody>
+            {% for wd in workdetails %}
+            <tr>
+              <td class="fw-semibold">{{ wd.date }}</td>
+
+              <td>
+                {% for labour in wd.labours.all %}
+                  <span class="badge bg-secondary">
+                    {{ labour.name }}
+                  </span>
+                {% empty %}
+                  <span class="text-muted">No Labour</span>
+                {% endfor %}
+              </td>
+
+              <td>{{ wd.vendor }}</td>
+
+             <td>
+               <span class="badge bg-info text-dark">
+                {{ wd.site.site_name }} - {{ wd.site.location }}
+               </span>
+             </td>
+
+
+            <td style="white-space: normal; text-align: center;">
+              {{ wd.work_description|linebreaksbr }}
+            </td>
+
+
+
+             <!-- Material -->
+              <td>
+                {% if wd.material_description %}
+                    {{ wd.material_description|linebreaksbr }}
+                {% else %}
+                    -
+                {% endif %}
+              </td>
+              
+              <!-- Check In -->
+              <td>
+                {% if wd.check_in %}
+                  <span class="badge bg-success">
+                    {{ wd.check_in|date:"h:i A" }}
+                  </span>
+                {% else %}
+                  -
+                {% endif %}
+              </td>
+              <td>
+                {% if wd.check_out %}
+                  <span class="badge bg-danger">
+                    {{ wd.check_out|date:"h:i A" }}
+                  </span>
+                {% else %}
+                  -
+                {% endif %}
+              </td>
+
+              <td>
+                <a href="{% url 'delete_workdetail' wd.id %}" 
+                   class="btn btn-outline-danger btn-sm rounded-pill">
+                   Delete
+                </a>
+              </td>
+            </tr>
+
+            {% empty %}
+            <tr>
+              <td colspan="8" class="text-muted py-4">
+                No Work Details Found
+              </td>
+            </tr>
+            {% endfor %}
+          </tbody>
+
+        </table>
+      </div>
+
+    </div>
+  </div>
+
+</div>
+{% endblock %}

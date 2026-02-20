@@ -1,0 +1,166 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<style>
+/* Common Inputs Styling */
+form input,
+form select,
+form textarea {
+    border-radius:50px !important;       /* curved corners */
+    border: 1.5px solid #333;             /* dark border color */
+    padding: 8px 12px;
+    font-size: 14px;                       /* professional font size */
+    color: #222;                           /* input text color */
+    width: 50%px;                           /* full width inside column */
+    box-sizing: border-box;
+    text-align: center;
+    margin-left: 10px;
+    font-weight: bold;
+    
+}
+
+/* Focus effect */
+form input:focus,
+form select:focus,
+form textarea:focus {
+    border-color: #007bff;                 /* blue focus */
+    box-shadow: 0 0 6px rgba(0, 123, 255, 0.3);
+    outline: none;
+}
+
+/* Work Updates (Description) Box Adjustment */
+.col-md-6 textarea {
+    min-height: 350px;                     /* slightly taller */
+    width: 300px;
+    
+
+                      /* shift a bit right */
+}
+
+/* Checkboxes Styling */
+form .form-check input[type="checkbox"] {
+    width: 16px;
+    height: 16px;
+    margin-right: 50pxpx;
+    vertical-align: middle;
+    font-weight: bolder;
+}
+
+form .form-check {
+    display: flex;
+    align-items: center; 
+    margin-bottom: 5px;
+}
+
+form .form-check label {
+    margin-bottom: 0;
+    font-size: 14px;
+}
+
+/* Card Padding Adjustment */
+.card {
+    max-width: 850px;      /* adjust width */
+    margin: 0 auto;         /* center horizontally */
+    padding: 200px;   
+    transition: all 0.3s ease;
+    border-radius: 16px
+    b
+      /* inner padding */
+    
+} 
+
+
+.card:hover {
+    box-shadow: -100px 0 25px rgba(18, 3, 3, 0.25); /* stronger dark shadow on hover */
+    transform: translateY(-30px);   
+}
+
+.mb-3{
+  margin-right: 40px;
+}
+
+.mb-3{
+
+  font-weight: 500;
+  
+}
+
+
+
+</style>
+
+
+<div class="container my-5">
+  <div class="card shadow-lg border-0 rounded-4 p-4">
+
+    <h3 class="mb-4 fw-bold" style="margin-top: 10px ;">Add Work Detail</h3>
+
+    <form method="POST">
+      {% csrf_token %}
+
+      <div class="row g-3">
+
+        <!-- Left Column (Most Fields) -->
+        <div class="col-md-6" style="font-weight: 600;">
+
+          <div class="mb-3">
+            <label class="form-label">Date</label>
+            {{ form.date }}
+          </div>
+
+          <div class="mb-3">
+           <label class="form-label">Vendor</label>
+              {{ form.vendor }}
+          </div>
+
+          <div class="mb-3">
+            <label class="form-label">Site</label>
+            {{ form.site }}
+          </div>
+
+          <div class="mb-3">
+            <label class="form-label">Labours</label>
+            {{ form.labours }}
+          </div>
+
+          <div class="mb-3">
+            <label class="form-label">Check In</label>
+            {{ form.check_in }}
+          </div>
+
+          <div class="mb-3">
+            <label class="form-label">Check Out</label>
+            {{ form.check_out }}
+          </div>
+
+        </div>
+
+        <!-- Right Column (Only Description) -->
+        <div class="col-md-6" style="font-weight: 600;">
+          <div class="mb-3">
+            <label class="form-label">Work Updates </label>
+            <br>
+            {{ form.work_description }}
+          </div>
+        </div>
+        <div class="mb-3">
+          <label class="form-label">Material Details</label>
+           <br>
+             {{ form.material_description }}
+        </div>
+
+      </div>
+
+      <!-- Buttons -->
+      <div class="mt-4 text-end">
+        <button type="submit" class="btn btn-success px-4 rounded-pill">Save</button>
+        <a href="{% url 'workdetail_list' %}" class="btn btn-primary px-4 rounded-pill">View Details</a>
+      </div>
+
+    </form>
+  </div>
+</div>
+
+
+
+{% endblock %}
