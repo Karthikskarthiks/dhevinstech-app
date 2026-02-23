@@ -1,1 +1,1 @@
-web: gunicorn WorkFlowProject.wsgi
+web: gunicorn WorkFlowProject.wsgi --bind 0.0.0.0:$PORT
