@@ -3,12 +3,6 @@ from django.shortcuts import render, redirect, get_object_or_404
 from .models import Labour, Site, WorkDetail
 from .serializers import LabourSerializer, SiteSerializer, WorkDetailSerializer
 from .forms import WorkDetailForm
-from django.http import HttpResponse
-
-
-def home(request):
-    return HttpResponse("WorkFlowProject is live!")
-
 
 # --- API ViewSets ---
 class LabourViewSet(viewsets.ModelViewSet):
