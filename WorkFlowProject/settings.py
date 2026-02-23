@@ -12,6 +12,9 @@ https://docs.djangoproject.com/en/4.2/ref/settings/
 import os
 from pathlib import Path
 
+from dotenv import load_dotenv
+load_dotenv()
+
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
 
@@ -20,10 +23,11 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 # See https://docs.djangoproject.com/en/4.2/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY =  os.environ.get("SECRET_KEY")
+SECRET_KEY = os.environ.get('SECRET_KEY', 'fallback-secret-key')
+
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
-ALLOWED_HOSTS = ['dhevinstech-app-1.onrender.com']
+DEBUG = False
+ALLOWED_HOSTS = ['dhevinstech-app.onrender.com']
 
 
 
@@ -80,15 +84,14 @@ WSGI_APPLICATION = 'WorkFlowProject.wsgi.application'
 
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.mysql',
-        'NAME': 'dhevins_db',
-        'USER' : 'root',
-        'PASSWORD' : '7708212',
-        'PORT' : '3306',
-        'HOST': 'localhost',
+        'ENGINE': 'django.db.backends.postgresql',
+        'NAME': os.environ.get('DB_NAME'),        # workflowdb
+        'USER': os.environ.get('DB_USER'),        # Render DB user
+        'PASSWORD': os.environ.get('DB_PASSWORD'),# Render DB password
+        'HOST': os.environ.get('DB_HOST'),        # Render DB host
+        'PORT': os.environ.get('DB_PORT', '5432'),
     }
 }
-
 # Password validation
 # https://docs.djangoproject.com/en/4.2/ref/settings/#auth-password-validators
 
