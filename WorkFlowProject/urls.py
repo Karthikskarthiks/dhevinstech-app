@@ -20,6 +20,7 @@ from Mywork.views import add_workdetail
 
 urlpatterns = [
     path('admin/', admin.site.urls),
+    path('', include('Frontend.urls')),
     path('', add_workdetail, name='add_workdetail'),
     path('Mywork/',include("Mywork.urls"))
 ]
