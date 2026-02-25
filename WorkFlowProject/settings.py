@@ -84,7 +84,8 @@ DATABASES = {
         'USER': 'dhevins',                         # Username
         'PASSWORD': 'ICZ3Q1aqrgadzXCPco1E8NbcAB7sm9BI',  # Password from Render
         'HOST':'dpg-d6e4lffgi27c73a47v5g-a.oregon-postgres.render.com',
-        'PORT': '5432',                             # Port
+        'PORT': '5432',
+        'OPTIONS': {'sslmode': 'require'}                                                
     }
 }
 
