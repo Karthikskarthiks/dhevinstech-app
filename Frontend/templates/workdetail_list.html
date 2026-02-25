@@ -4,8 +4,6 @@
 
 <div class="container-fluid my-5" style="width:95%;">
 
-
-
   <!-- Page Header -->
   <div class="d-flex justify-content-between align-items-center mb-4">
     <h2 class="fw-bold text-dark">Work Details</h2>
@@ -13,9 +11,73 @@
       + Add Work
     </a>
   </div>
-  
 
-  <!-- Card Wrapper -->
+  <!-- ✅ Back Button (Visible only when filtered) -->
+  {% if is_filtered %}
+  <div class="text-center mb-3">
+    <a href="{% url 'workdetail_list' %}" 
+       class="btn back-btn px-4 py-2">
+       ← Back to All Work Details
+    </a>
+  </div>
+  {% endif %}
+
+  <!-- 🔍 Filter Section -->
+  <div class="card shadow-sm mb-4 border-0 rounded-4">
+    <div class="card-body">
+      <form method="GET">
+        <div class="row g-3">
+
+          <div class="col-md-2">
+            <label class="form-label fw-semibold">Date</label>
+            <input type="date" name="date" 
+                   value="{{ date_query }}"
+                   class="form-control">
+          </div>
+
+          <div class="col-md-2">
+            <label class="form-label fw-semibold">Labour</label>
+            <input type="text" name="labour" 
+                   value="{{ labour_query }}"
+                   class="form-control"
+                   placeholder="Enter Labour Name">
+          </div>
+
+          <div class="col-md-2">
+            <label class="form-label fw-semibold">Vendor</label>
+            <input type="text" name="vendor" 
+                   value="{{ vendor_query }}"
+                   class="form-control"
+                   placeholder="Enter Vendor Name">
+          </div>
+
+          <div class="col-md-2">
+            <label class="form-label fw-semibold">Site</label>
+            <input type="text" name="site" 
+                   value="{{ site_query }}"
+                   class="form-control"
+                   placeholder="Enter Site Name">
+          </div>
+
+          <div class="col-md-2 d-flex align-items-end">
+            <button type="submit" class="btn btn-dark w-100">
+              Filter
+            </button>
+          </div>
+
+          <div class="col-md-2 d-flex align-items-end">
+            <a href="{% url 'workdetail_list' %}" 
+               class="btn btn-secondary w-100">
+              Reset
+            </a>
+          </div>
+
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <!-- Table Section -->
   <div class="card shadow-lg border-0 rounded-4">
     <div class="card-body p-4">
 
@@ -53,20 +115,16 @@
 
               <td>{{ wd.vendor }}</td>
 
-             <td>
-               <span class="badge bg-info text-dark">
-                {{ wd.site.site_name }} - {{ wd.site.location }}
-               </span>
-             </td>
+              <td>
+                <span class="badge bg-info text-dark">
+                  {{ wd.site.site_name }} - {{ wd.site.location }}
+                </span>
+              </td>
 
+              <td style="white-space: normal;">
+                {{ wd.work_description|linebreaksbr }}
+              </td>
 
-            <td style="white-space: normal; text-align: center;">
-              {{ wd.work_description|linebreaksbr }}
-            </td>
-
-
-
-             <!-- Material -->
               <td>
                 {% if wd.material_description %}
                     {{ wd.material_description|linebreaksbr }}
@@ -75,7 +133,6 @@
                 {% endif %}
               </td>
               
-              <!-- Check In -->
               <td>
                 {% if wd.check_in %}
                   <span class="badge bg-success">
@@ -85,6 +142,7 @@
                   -
                 {% endif %}
               </td>
+
               <td>
                 {% if wd.check_out %}
                   <span class="badge bg-danger">
@@ -96,8 +154,14 @@
               </td>
 
               <td>
+                <a href="{% url 'edit_workdetail' wd.id %}" 
+                   class="btn btn-outline-primary btn-sm rounded-pill me-2">
+                   Edit
+                </a>
+
                 <a href="{% url 'delete_workdetail' wd.id %}" 
-                   class="btn btn-outline-danger btn-sm rounded-pill">
+                   class="btn btn-outline-danger btn-sm rounded-pill"
+                   onclick="return confirm('Are you sure you want to delete this record?');">
                    Delete
                 </a>
               </td>
@@ -105,7 +169,7 @@
 
             {% empty %}
             <tr>
-              <td colspan="8" class="text-muted py-4">
+              <td colspan="9" class="text-muted py-4">
                 No Work Details Found
               </td>
             </tr>
@@ -119,4 +183,27 @@
   </div>
 
 </div>
+
+<!-- 🔥 Animated Button CSS -->
+<style>
+.back-btn {
+    background: linear-gradient(45deg, #0d6efd, #6610f2);
+    color: white;
+    border-radius: 30px;
+    font-weight: 600;
+    transition: all 0.4s ease;
+    box-shadow: 0 5px 15px rgba(0,0,0,0.2);
+}
+
+.back-btn:hover {
+    transform: translateY(-4px) scale(1.05);
+    box-shadow: 0 10px 25px rgba(0,0,0,0.3);
+    color: white;
+}
+
+.back-btn:active {
+    transform: scale(0.95);
+}
+</style>
+
 {% endblock %}

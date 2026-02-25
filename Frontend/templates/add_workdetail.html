@@ -6,16 +6,17 @@
 form input,
 form select,
 form textarea {
-    border-radius:50px !important;       /* curved corners */
-    border: 1.5px solid #333;             /* dark border color */
+    border-radius:30px !important;       /* curved corners */
+    border: 2px solid #333;             /* dark border color */
     padding: 8px 12px;
     font-size: 14px;                       /* professional font size */
-    color: #222;                           /* input text color */
+    color: #0a0303;                           /* input text color */
     width: 50%px;                           /* full width inside column */
     box-sizing: border-box;
-    text-align: center;
-    margin-left: 10px;
+    text-align: start;
+    margin-left: 20px;
     font-weight: bold;
+    
     
 }
 
@@ -45,6 +46,26 @@ form .form-check input[type="checkbox"] {
     vertical-align: middle;
     font-weight: bolder;
 }
+.card {
+    max-width: 850px;
+    margin: 0 auto;
+    padding: 40px;              /* reduced padding */
+    border-radius: 20px;
+    background: linear-gradient(-45deg, #d60909, #b5259d, #05b6cda8, #da5b11);
+    background-size: 400% 400%;
+    animation: gradientBG 15s ease infinite;
+    color: white;               /* card font color white */
+    font-weight: bold;          /* card font bold */
+    transition: all 0.3s ease;
+}
+/* Gradient animation */
+@keyframes gradientBG {
+    0% { background-position: 0% 50%; }
+    25% { background-position: 50% 50%; }
+    50% { background-position: 100% 50%; }
+    75% { background-position: 50% 50%; }
+    100% { background-position: 0% 50%; }
+}
 
 form .form-check {
     display: flex;
@@ -58,16 +79,11 @@ form .form-check label {
 }
 
 /* Card Padding Adjustment */
-.card {
-    max-width: 850px;      /* adjust width */
-    margin: 0 auto;         /* center horizontally */
-    padding: 200px;   
-    transition: all 0.3s ease;
-    border-radius: 16px
-    b
+
+    
       /* inner padding */
     
-} 
+
 
 
 .card:hover {
@@ -77,13 +93,10 @@ form .form-check label {
 
 .mb-3{
   margin-right: 40px;
-}
-
-.mb-3{
-
   font-weight: 500;
   
 }
+
 
 
 
@@ -144,7 +157,7 @@ form .form-check label {
           </div>
         </div>
         <div class="mb-3">
-          <label class="form-label">Material Details</label>
+          <label class="form-label">Material Details</label>  
            <br>
              {{ form.material_description }}
         </div>
