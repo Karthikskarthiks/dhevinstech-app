@@ -2,7 +2,7 @@
 
 {% block content %}
 
-<div class="container-fluid my-5" style="width:95%;">
+<div class="container-fluid my-5" style="width:100%;">
 
   <!-- Page Header -->
   <div class="d-flex justify-content-between align-items-center mb-4">
@@ -101,9 +101,9 @@
           <tbody>
             {% for wd in workdetails %}
             <tr>
-              <td class="fw-semibold">{{ wd.date }}</td>
+              <td class="fw-semibold" style="width: 0.5px;">{{ wd.date }}</td>
 
-              <td>
+              <td style="width: 3px;">
                 {% for labour in wd.labours.all %}
                   <span class="badge bg-secondary">
                     {{ labour.name }}
@@ -116,9 +116,10 @@
               <td>{{ wd.vendor }}</td>
 
               <td>
-                <span class="badge bg-info text-dark">
-                  {{ wd.site.site_name }} - {{ wd.site.location }}
-                </span>
+                <span class="badge bg-info text-dark" style="white-space: normal;">
+                  {{ wd.site.site_name }}<br>
+                  {{ wd.site.location }}
+                </span> 
               </td>
 
               <td style="white-space: normal;">
