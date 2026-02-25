@@ -12,7 +12,7 @@ class Site(models.Model):
     location = models.CharField(max_length=200)
 
     def __str__(self):
-        return self.site_name+","+self.location
+         return f"{self.site_name}\n{self.location}"
     
 class Vendor(models.Model):
     name = models.CharField(max_length=100)
