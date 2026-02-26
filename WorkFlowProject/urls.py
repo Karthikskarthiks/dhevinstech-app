@@ -1,25 +1,14 @@
-"""
-URL configuration for WorkFlowProject project.
-
-The `urlpatterns` list routes URLs to views. For more information please see:
-    https://docs.djangoproject.com/en/4.2/topics/http/urls/
-Examples:
-Function views
-    1. Add an import:  from my_app import views
-    2. Add a URL to urlpatterns:  path('', views.home, name='home')
-Class-based views
-    1. Add an import:  from other_app.views import Home
-    2. Add a URL to urlpatterns:  path('', Home.as_view(), name='home')
-Including another URLconf
-    1. Import the include() function: from django.urls import include, path
-    2. Add a URL to urlpatterns:  path('blog/', include('blog.urls'))
-"""
 from django.contrib import admin
-from django.urls import path,include
-from Mywork.views import add_workdetail 
+from django.urls import path, include
+from Mywork.views import add_workdetail
+from django.http import HttpResponse
+import sys
 
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('', add_workdetail, name='add_workdetail'),
-    path('Mywork/',include("Mywork.urls"))
+    path('Mywork/', include("Mywork.urls")),
+    
+    # Temporary route to check Python version
+    path("check-python/", lambda request: HttpResponse(sys.version)),
 ]
