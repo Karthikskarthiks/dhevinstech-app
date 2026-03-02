@@ -7,9 +7,14 @@
   <!-- Page Header -->
   <div class="d-flex justify-content-between align-items-center mb-4">
     <h2 class="fw-bold text-dark">Work Details</h2>
-    <a href="{% url 'add_workdetail' %}" class="btn btn-success shadow-sm">
+    <a href="{% url 'add_workdetail' %}" class="btn btn-success shadow-sm" style="width: 200px;">
       + Add Work
     </a>
+    <div>
+      <a href="{% url 'export_workdetails_csv' %}" class="btn btn-success mb-3">
+        Download Backup (CSV)
+      </a>
+    </div>
   </div>
 
   <!-- ✅ Back Button (Visible only when filtered) -->

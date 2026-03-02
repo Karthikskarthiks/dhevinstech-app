@@ -1,8 +1,10 @@
 from rest_framework import viewsets
 from django.shortcuts import render, redirect, get_object_or_404
+from django.http import HttpResponse
 from .models import Labour, Site, WorkDetail
 from .serializers import LabourSerializer, SiteSerializer, WorkDetailSerializer
 from .forms import WorkDetailForm
+import csv
 
 
 # ------------------------------
@@ -28,9 +30,9 @@ class WorkDetailViewSet(viewsets.ModelViewSet):
 # ------------------------------
 def workdetail_list(request):
     """List all workdetails with optional filtering."""
-    workdetails = WorkDetail.objects.select_related('vendor', 'site').prefetch_related('labours')
+    workdetails = WorkDetail.objects.select_related('vendor', 'site').prefetch_related('labours').order_by('-date', '-created_at')
 
-    # Filters
+    # Filters (friendly, partial, case-insensitive)
     date_query = request.GET.get('date', '')
     labour_query = request.GET.get('labour', '')
     vendor_query = request.GET.get('vendor', '')
@@ -90,3 +92,34 @@ def delete_workdetail(request, pk):
     work = get_object_or_404(WorkDetail, pk=pk)
     work.delete()
     return redirect('workdetail_list')
+
+
+# ------------------------------
+# CSV Export (Backup)
+# ------------------------------
+def export_workdetails_csv(request):
+    """Export all WorkDetails to CSV"""
+    response = HttpResponse(content_type='text/csv')
+    response['Content-Disposition'] = 'attachment; filename="workdetails.csv"'
+
+    writer = csv.writer(response)
+    writer.writerow(['Date','Labour','Vendor','Site','Work Details','Material','Check In','Check Out'])
+
+    workdetails = WorkDetail.objects.select_related('vendor', 'site').prefetch_related('labours').order_by('-date', '-created_at')
+
+    for wd in workdetails:
+        labours = ", ".join([l.name for l in wd.labours.all()])
+        vendor = wd.vendor.name if wd.vendor else ''
+        site = f"{wd.site.site_name} {wd.site.location}"
+        writer.writerow([
+            wd.date,
+            labours,
+            vendor,
+            site,
+            wd.work_description,
+            wd.material_description or '',
+            wd.check_in,
+            wd.check_out
+        ])
+
+    return response

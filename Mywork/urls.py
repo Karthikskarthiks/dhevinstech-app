@@ -17,6 +17,8 @@ urlpatterns = [
     path('list/', views.workdetail_list, name='workdetail_list'),
     path('edit/<int:pk>/', views.edit_workdetail, name='edit_workdetail'),
     path('delete/<int:pk>/', views.delete_workdetail, name='delete_workdetail'),
+    path('export/csv/', views.export_workdetails_csv, name='export_workdetails_csv'),
+
 
     # API Routes
     path('api/', include(router.urls)),
