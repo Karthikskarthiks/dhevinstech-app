@@ -73,16 +73,14 @@ TEMPLATES = [
 
 WSGI_APPLICATION = 'WorkFlowProject.wsgi.application'
 
-
-# Database
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql',
         'NAME': 'postgres',
-        'USER': 'postgres',
-        'PASSWORD': 'dhevinstech',  # un password
-        'HOST': 'db.vvbabqrrhskqfhpbxquk.supabase.co',
-        'PORT': '5432',
+        'USER': 'postgres.vvbabqrrhskqfhpbxquk',
+        'PASSWORD': 'dhevinstech',
+        'HOST': 'aws-1-us-east-2.pooler.supabase.com',
+        'PORT': '6543',
     }
 }
 # Password validation
