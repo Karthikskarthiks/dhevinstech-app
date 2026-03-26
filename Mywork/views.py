@@ -29,10 +29,10 @@ class WorkDetailViewSet(viewsets.ModelViewSet):
 # Template Views
 # ------------------------------
 def workdetail_list(request):
-    """List all workdetails with optional filtering."""
+    
     workdetails = WorkDetail.objects.select_related('vendor', 'site').prefetch_related('labours').order_by('-date', '-created_at')
 
-    # Filters (friendly, partial, case-insensitive)
+  
     date_query = request.GET.get('date', '')
     labour_query = request.GET.get('labour', '')
     vendor_query = request.GET.get('vendor', '')
@@ -50,7 +50,7 @@ def workdetail_list(request):
     if site_query:
         workdetails = workdetails.filter(site__site_name__icontains=site_query)
 
-    workdetails = workdetails.distinct()
+    workdetails = workdetails.distinct() # duplicate remove 
 
     context = {
         'workdetails': workdetails,

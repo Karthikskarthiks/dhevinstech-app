@@ -75,20 +75,16 @@ WSGI_APPLICATION = 'WorkFlowProject.wsgi.application'
 
 
 # Database
-# https://docs.djangoproject.com/en/4.2/ref/settings/#databases
-
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql',
-        'NAME': 'dhevins_db_xfnm',                 # Database name
-        'USER': 'dhevins',                         # Username
-        'PASSWORD': 'ICZ3Q1aqrgadzXCPco1E8NbcAB7sm9BI',  # Password from Render
-        'HOST':'dpg-d6e4lffgi27c73a47v5g-a.oregon-postgres.render.com',
+        'NAME': 'postgres',
+        'USER': 'postgres',
+        'PASSWORD': 'dhevinstech',  # un password
+        'HOST': 'db.vvbabqrrhskqfhpbxquk.supabase.co',
         'PORT': '5432',
-        'OPTIONS': {'sslmode': 'require'}                                                
     }
 }
-
 # Password validation
 # https://docs.djangoproject.com/en/4.2/ref/settings/#auth-password-validators
 
