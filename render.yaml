@@ -4,7 +4,11 @@ services:
     env: python
     plan: free
     buildCommand: "pip install -r requirements.txt"
-    startCommand: "gunicorn WorkFlowProject.wsgi:application"
+    startCommand: "gunicorn WorkFlowProject.wsgi --bind 0.0.0.0:$PORT"
     envVars:
       - key: PYTHON_VERSION
         value: 3.11.9
+      - key: DATABASE_URL
+        value: postgresql://postgres.vvbabqrrhskqfhpbxquk:dhevinstech@aws-1-us-east-2.pooler.supabase.com:6543/postgres
+      - key: SECRET_KEY
+        value: django-insecure-d=@@k+2yyp)f%=h9&=no#fb(1(o=qm2d9lu13sc#2!dbdekze_
