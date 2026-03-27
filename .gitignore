@@ -3,3 +3,6 @@
 
 # Python virtual environment
 .jango/
+.djang*
+__pycache__/
+*.pyc
