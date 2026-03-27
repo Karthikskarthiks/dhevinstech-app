@@ -5,7 +5,15 @@ from .models import Labour, Site, WorkDetail
 from .serializers import LabourSerializer, SiteSerializer, WorkDetailSerializer
 from .forms import WorkDetailForm
 import csv
+ 
 
+# --------recent dm not sleeper -----
+
+from .models import Labour
+
+def keep_alive(request):
+    Labour.objects.count()   # DB hit 🔥
+    return HttpResponse("DB Alive")
 
 # ------------------------------
 # DRF API ViewSets

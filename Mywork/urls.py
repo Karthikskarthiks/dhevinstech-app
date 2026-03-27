@@ -1,6 +1,7 @@
 from django.urls import path, include
 from rest_framework.routers import DefaultRouter
 from . import views
+from .views import *
 
 # DRF Router
 router = DefaultRouter()
@@ -9,6 +10,9 @@ router.register(r'sites', views.SiteViewSet)
 router.register(r'workdetails-api', views.WorkDetailViewSet)
 
 urlpatterns = [
+
+    # ------recent db ----
+    path('keep-alive/', keep_alive),
 
     # 🔥 Home URL → Add Page
     path('', views.add_workdetail, name='home'),
