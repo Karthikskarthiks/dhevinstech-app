@@ -2,80 +2,65 @@
 
 {% block content %}
 
-
 <div class="container-fluid my-5" style="width:100%;">
 
-  <!-- Page Header -->
-  <div class="d-flex justify-content-between align-items-center mb-4">
-    <h2 class="fw-bold text-dark">Work Details</h2>
-    <a href="{% url 'add_workdetail' %}" class="btn btn-success shadow-sm" style="width: 200px;">
-      + Add Work
-    </a>
+  <div class="d-flex flex-column flex-md-row justify-content-between align-items-start gap-3 mb-4">
     <div>
-      <a href="{% url 'export_workdetails_csv' %}" class="btn btn-success mb-3">
-        Download Backup (CSV)
+      <h2 class="fw-bold mb-1 text-white header-title">Work Details</h2>
+      <p class="text-muted mb-0 header-subtitle">Browse and manage all work entries in a clean neon dashboard.</p>
+    </div>
+    <div class="d-flex flex-wrap gap-2 align-items-center">
+      <a href="{% url 'add_workdetail' %}" class="btn btn-success shadow-sm" style="width: 200px;">
+        + Add Work
+      </a>
+      <a href="{% url 'export_workdetails_csv' %}" class="btn btn-primary shadow-sm" style="min-width: 180px;">
+        Download CSV
       </a>
     </div>
   </div>
 
-  <!-- ✅ Back Button (Visible only when filtered) -->
   {% if is_filtered %}
   <div class="text-center mb-3">
-    <a href="{% url 'workdetail_list' %}" 
-       class="btn back-btn px-4 py-2">
-       ← Back to All Work Details
+    <a href="{% url 'workdetail_list' %}" class="btn back-btn px-4 py-2">
+      ← Back to All Work Details
     </a>
   </div>
   {% endif %}
 
-  <!-- 🔍 Filter Section -->
-  <div class="card shadow-sm mb-4 border-0 rounded-4">
+  <div class="card shadow-sm mb-4 border-0 rounded-4 filter-card animate-card animate-delay-1">
     <div class="card-body">
       <form method="GET">
         <div class="row g-3">
 
           <div class="col-md-2">
-            <label class="form-label fw-semibold">Date</label>
-            <input type="date" name="date" 
-                   value="{{ date_query }}"
-                   class="form-control">
+            <label class="form-label">Date</label>
+            <input type="date" name="date" value="{{ date_query }}" class="form-control form-control-custom">
           </div>
 
           <div class="col-md-2">
-            <label class="form-label fw-semibold">Labour</label>
-            <input type="text" name="labour" 
-                   value="{{ labour_query }}"
-                   class="form-control"
-                   placeholder="Enter Labour Name">
+            <label class="form-label">Labour</label>
+            <input type="text" name="labour" value="{{ labour_query }}" class="form-control form-control-custom"
+              placeholder="Enter Labour Name">
           </div>
 
           <div class="col-md-2">
-            <label class="form-label fw-semibold">Vendor</label>
-            <input type="text" name="vendor" 
-                   value="{{ vendor_query }}"
-                   class="form-control"
-                   placeholder="Enter Vendor Name">
+            <label class="form-label">Vendor</label>
+            <input type="text" name="vendor" value="{{ vendor_query }}" class="form-control form-control-custom"
+              placeholder="Enter Vendor Name">
           </div>
 
           <div class="col-md-2">
-            <label class="form-label fw-semibold">Site</label>
-            <input type="text" name="site" 
-                   value="{{ site_query }}"
-                   class="form-control"
-                   placeholder="Enter Site Name">
+            <label class="form-label">Site</label>
+            <input type="text" name="site" value="{{ site_query }}" class="form-control form-control-custom"
+              placeholder="Enter Site Name">
           </div>
 
           <div class="col-md-2 d-flex align-items-end">
-            <button type="submit" class="btn btn-dark w-100">
-              Filter
-            </button>
+            <button type="submit" class="btn btn-success w-100">Filter</button>
           </div>
 
           <div class="col-md-2 d-flex align-items-end">
-            <a href="{% url 'workdetail_list' %}" 
-               class="btn btn-secondary w-100">
-              Reset
-            </a>
+            <a href="{% url 'workdetail_list' %}" class="btn btn-primary w-100">Reset</a>
           </div>
 
         </div>
@@ -83,14 +68,11 @@
     </div>
   </div>
 
-  <!-- Table Section -->
-  <div class="card shadow-lg border-0 rounded-4">
+  <div class="card shadow-lg border-0 rounded-4 table-card animate-card animate-delay-2">
     <div class="card-body p-4">
-
       <div class="table-responsive">
-        <table class="table table-hover align-middle text-center">
-
-          <thead class="table-dark">
+        <table class="table table-hover align-middle text-center table-dark table-custom">
+          <thead>
             <tr>
               <th>Date</th>
               <th>Labour</th>
@@ -103,114 +85,453 @@
               <th>Actions</th>
             </tr>
           </thead>
-
           <tbody>
             {% for wd in workdetails %}
             <tr>
-              <td class="fw-semibold" style="width: 0.5px;">{{ wd.date }}</td>
-
-              <td style="width: 3px;">
+              <td class="fw-semibold">{{ wd.date }}</td>
+              <td>
                 {% for labour in wd.labours.all %}
-                  <span class="badge bg-secondary">
-                    {{ labour.name }}
-                  </span>
+                <span class="chip chip-labour">{{ labour.name }}</span>
                 {% empty %}
-                  <span class="text-muted">No Labour</span>
+                <span class="text-muted">No Labour</span>
                 {% endfor %}
               </td>
-
               <td>{{ wd.vendor }}</td>
-
               <td>
-                <span class="badge bg-info text-dark" style="white-space: normal;">
-                  {{ wd.site.site_name }}<br>
-                  {{ wd.site.location }}
-                </span> 
+                <span class="chip chip-site">{{ wd.site.site_name }}<br>{{ wd.site.location }}</span>
               </td>
-
-              <td style="white-space: normal;">
-                {{ wd.work_description|linebreaksbr }}
-              </td>
-
-              <td>
+              <td class="text-start" style="white-space: normal;">{{ wd.work_description|linebreaksbr }}</td>
+              <td class="text-start" style="white-space: normal;">
                 {% if wd.material_description %}
-                    {{ wd.material_description|linebreaksbr }}
+                {{ wd.material_description|linebreaksbr }}
                 {% else %}
-                    -
+                -
                 {% endif %}
               </td>
-              
               <td>
                 {% if wd.check_in %}
-                  <span class="badge bg-success">
-                    {{ wd.check_in|date:"h:i A" }}
-                  </span>
+                <span class="chip chip-success">{{ wd.check_in|date:"h:i A" }}</span>
                 {% else %}
-                  -
+                -
                 {% endif %}
               </td>
-
               <td>
                 {% if wd.check_out %}
-                  <span class="badge bg-danger">
-                    {{ wd.check_out|date:"h:i A" }}
-                  </span>
+                <span class="chip chip-danger">{{ wd.check_out|date:"h:i A" }}</span>
                 {% else %}
-                  -
+                -
                 {% endif %}
               </td>
-
               <td>
-                <a href="{% url 'edit_workdetail' wd.id %}" 
-                   class="btn btn-outline-primary btn-sm rounded-pill me-2">
-                   Edit
-                </a>
-
-                <a href="{% url 'delete_workdetail' wd.id %}" 
-                   class="btn btn-outline-danger btn-sm rounded-pill"
-                   onclick="return confirm('Are you sure you want to delete this record?');">
-                   Delete
-                </a>
+                <a href="{% url 'workdetail_detail' wd.id %}" class="btn btn-sm btn-primary me-2">View</a>
+                <a href="{% url 'edit_workdetail' wd.id %}" class="btn btn-sm btn-success me-2">Edit</a>
+                <a href="{% url 'delete_workdetail' wd.id %}" class="btn btn-sm btn-danger"
+                  onclick="return confirm('Delete this record?');">Delete</a>
               </td>
             </tr>
-
             {% empty %}
             <tr>
-              <td colspan="9" class="text-muted py-4">
-                No Work Details Found
-              </td>
+              <td colspan="9" class="text-muted py-4">No Work Details Found</td>
             </tr>
             {% endfor %}
           </tbody>
-
         </table>
       </div>
-
     </div>
   </div>
-
 </div>
 
-<!-- 🔥 Animated Button CSS -->
 <style>
-.back-btn {
-    background: linear-gradient(45deg, #0d6efd, #6610f2);
+  @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap');
+
+  * {
+    font-family: 'Poppins', sans-serif;
+  }
+
+  .card {
+    max-width: 100%;
+    width: 100%;
+    margin: 0 auto;
+    border-radius: 24px;
+    background: linear-gradient(135deg, #1a1a2e 0%, #16213e 50%, #0f3460 100%);
     color: white;
-    border-radius: 30px;
-    font-weight: 600;
     transition: all 0.4s ease;
-    box-shadow: 0 5px 15px rgba(0,0,0,0.2);
-}
+    overflow: hidden;
+    position: relative;
+    border: 1px solid rgba(255, 255, 255, 0.1);
+  }
 
-.back-btn:hover {
-    transform: translateY(-4px) scale(1.05);
-    box-shadow: 0 10px 25px rgba(0,0,0,0.3);
+  .card::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(180deg, rgba(0, 212, 255, 0.08) 0%, transparent 50%);
+    z-index: 0;
+  }
+
+  .card:hover {
+    box-shadow: 0 30px 60px rgba(0, 0, 0, 0.5), 0 0 40px rgba(0, 212, 255, 0.2);
+    transform: translateY(-3px);
+  }
+
+  .header-title {
+    animation: fadeInUp 1s ease-out, glowPulse 3s ease-in-out infinite alternate;
+  }
+
+  .header-subtitle {
+    animation: fadeInUp 1.5s ease-out 0.3s both;
+  }
+
+  .animate-delay-1 {
+    animation-delay: 0.5s !important;
+  }
+
+  .animate-delay-2 {
+    animation-delay: 1s !important;
+  }
+
+  @keyframes fadeInUp {
+    0% {
+      opacity: 0;
+      transform: translateY(30px);
+    }
+
+    100% {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+
+  @keyframes slideInUp {
+    0% {
+      opacity: 0;
+      transform: translateY(50px);
+    }
+
+    100% {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+
+  @keyframes glowPulse {
+    0% {
+      text-shadow: 0 0 10px rgba(255, 255, 255, 0.5);
+    }
+
+    100% {
+      text-shadow: 0 0 20px rgba(0, 212, 255, 0.8), 0 0 30px rgba(0, 212, 255, 0.4);
+    }
+  }
+
+  .card-header {
+    position: relative;
+    padding: 20px 30px;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+    z-index: 1;
+  }
+
+  .card-header::after {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    height: 3px;
+    background: linear-gradient(90deg, #00d4ff, #8b5cf6, #ec4899, #06b6d4, #00d4ff);
+    background-size: 300% 100%;
+    animation: shimmer 8s linear infinite;
+  }
+
+  @keyframes shimmer {
+    0% {
+      background-position: -300% 0;
+    }
+
+    100% {
+      background-position: 300% 0;
+    }
+  }
+
+  .card-body {
+    position: relative;
+    z-index: 1;
+    padding: 20px 25px;
+  }
+
+  .form-control-custom,
+  .form-control,
+  .form-select {
+    border-radius: 10px;
+    border: 2px solid rgba(255, 255, 255, 0.15);
+    padding: 14px 18px;
+    font-size: 14px;
+    color: #fff;
+    width: 100%;
+    box-sizing: border-box;
+    font-weight: 600;
+    background: rgba(255, 255, 255, 0.08);
+    transition: all 0.3s ease;
+    background-image: url("data:image/svg+xml;charset=US-ASCII,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20width%3D%22292.4%22%20height%3D%22292.4%22%3E%3Cpath%20fill%3D%22%23ffffff%22%20d%3D%22M287%2069.4a17.6%2017.6%200%200%200-13-5.4H18.4c-5%200-9.3%201.8-12.9%205.4A17.6%2017.6%200%200%200%200%2082.2c0%205%201.8%209.3%205.4%2012.9l128%20127.9c3.6%203.6%207.8%205.4%2012.8%205.4s9.2-1.8%2012.8-5.4L287%2095c3.5-3.5%205.4-7.8%205.4-12.8%200-5-1.9-9.2-5.5-12.8z%22%2F%3E%3C%2Fsvg%3E");
+    background-repeat: no-repeat;
+    background-position: right 15px center;
+    background-size: 12px;
+    box-shadow: 0 0 10px rgba(0, 212, 255, 0.1);
+  }
+
+  .form-control-custom:hover,
+  .form-control:hover,
+  .form-select:hover {
+    border-color: rgba(0, 212, 255, 0.5);
+    background: rgba(255, 255, 255, 0.12);
+    box-shadow: 0 0 15px rgba(0, 212, 255, 0.2);
+  }
+
+  .form-control:focus,
+  .form-select:focus {
+    border-color: #00d4ff;
+    box-shadow: 0 0 20px rgba(0, 212, 255, 0.3);
+    background: rgba(255, 255, 255, 0.12);
+    outline: none;
+  }
+
+  .form-control-custom::placeholder {
+    color: #ffffff;
+  }
+
+  .form-label {
+    color: #00d4ff;
+    font-weight: 700;
+    font-size: 14px;
+    text-transform: uppercase;
+    letter-spacing: 1.5px;
+    margin-bottom: 8px;
+    display: block;
+    transition: all 0.3s ease;
+    cursor: pointer;
+  }
+
+  .form-label:hover {
+    color: #ff0080;
+    text-shadow: 0 0 15px rgba(255, 0, 128, 0.6);
+    transform: translateX(5px);
+  }
+
+  .form-label::before {
+    content: '◆';
+    margin-right: 8px;
+    font-size: 10px;
+  }
+
+  .filter-card,
+  .table-card {
+    background: rgba(16, 24, 50, 0.95);
+  }
+
+  .table-custom tbody tr {
+    background: rgba(255, 255, 255, 0.02);
+    border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+  }
+
+  .table-custom thead th {
+    border-bottom: 2px solid rgba(255, 255, 255, 0.12);
+    background: rgba(0, 0, 0, 0.35);
+    color: #fff;
+    font-weight: 700;
+  }
+
+  .chip {
+    display: inline-flex;
+    align-items: center;
+    border-radius: 999px;
+    padding: 0.45rem 0.8rem;
+    font-size: 0.78rem;
+    font-weight: 700;
+    margin: 0 0.2rem 0.2rem 0;
+  }
+
+  .chip-site {
+    background: rgba(6, 182, 212, 0.18);
+    color: #ffffff;
+  }
+
+  .chip-labour {
+    background: rgba(14, 165, 233, 0.18);
+    color: #ffffff;
+  }
+
+  .chip-success {
+    background: rgba(34, 197, 94, 0.18);
+    color: #ffffff;
+  }
+
+  .chip-danger {
+    background: rgba(239, 68, 68, 0.18);
+    color: #ffffff;
+  }
+
+  .btn {
+    padding: 14px 35px;
+    font-weight: 700;
+    font-size: 14px;
+    text-transform: uppercase;
+    letter-spacing: 1.5px;
+    transition: all 0.3s ease;
+    border: none;
+    border-radius: 50px;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .btn::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: -100%;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.3), transparent);
+    transition: 0.5s;
+  }
+
+  .btn:hover::before {
+    left: 100%;
+  }
+
+  .btn-success {
+    background: linear-gradient(135deg, #22c55e, #16a34a, #15803d, #22c55e);
     color: white;
-}
+    animation: btnGreenShine 4s ease infinite;
+  }
 
-.back-btn:active {
-    transform: scale(0.95);
-}
+  .btn-primary {
+    background: linear-gradient(135deg, #06b6d4, #0891b2, #0e7490, #06b6d4);
+    color: white;
+  }
+
+  .btn-primary:hover {
+    background: linear-gradient(135deg, #ff6a00, #ee0979, #00c6ff, #ff6a00);
+    background-size: 300% 100%;
+    animation: btnColorShine 2s ease infinite;
+    transform: translateY(-3px) scale(1.05);
+    box-shadow: 0 10px 40px rgba(0, 0, 0, 0.3), 0 0 30px #06b6d4;
+  }
+
+  .btn-primary:hover {
+    background: linear-gradient(135deg, #ff6a00, #ee0979, #00c6ff, #ff6a00);
+    background-size: 300% 100%;
+    animation: btnColorShine 2s ease infinite;
+    transform: translateY(-3px) scale(1.05);
+    box-shadow: 0 10px 40px rgba(0, 0, 0, 0.3), 0 0 30px #06b6d4;
+  }
+
+  .btn-danger {
+    background: linear-gradient(135deg, #ef4444, #dc2626, #b91c1c, #ef4444);
+    color: white;
+  }
+
+  .btn-success:hover {
+    background: linear-gradient(135deg, #ff6a00, #ee0979, #00c6ff, #ff6a00);
+    background-size: 300% 100%;
+    animation: btnColorShine 2s ease infinite;
+    transform: translateY(-3px) scale(1.05);
+    box-shadow: 0 10px 40px rgba(0, 0, 0, 0.3), 0 0 30px #22c55e;
+  }
+
+  .btn-danger:hover {
+    transform: translateY(-3px) scale(1.05);
+    box-shadow: 0 10px 40px rgba(0, 0, 0, 0.3), 0 0 30px #ef4444;
+  }
+
+  background: linear-gradient(135deg, #0ea5e9, #06b6d4);
+  color: white;
+  border-radius: 50px;
+  font-weight: 700;
+  border: none;
+  box-shadow: 0 10px 25px rgba(14, 165, 233, 0.2);
+  }
+
+  .back-btn:hover {
+    transform: translateY(-3px) scale(1.03);
+  }
+
+  @keyframes btnGreenShine {
+    0% {
+      background-position: 0% 50%;
+    }
+
+    50% {
+      background-position: 100% 50%;
+    }
+
+    100% {
+      background-position: 0% 50%;
+    }
+  }
+
+  @keyframes btnGoldShine {
+    0% {
+      background-position: 0% 50%;
+    }
+
+    50% {
+      background-position: 100% 50%;
+    }
+
+    100% {
+      background-position: 0% 50%;
+    }
+  }
+
+  @keyframes btnBlueShine {
+    0% {
+      background-position: 0% 50%;
+    }
+
+    50% {
+      background-position: 100% 50%;
+    }
+
+    100% {
+      background-position: 0% 50%;
+    }
+  }
+
+  @keyframes btnColorShine {
+    0% {
+      background-position: 0% 50%;
+    }
+
+    50% {
+      background-position: 100% 50%;
+    }
+
+    100% {
+      background-position: 0% 50%;
+    }
+  }
+
+  .text-white {
+    color: #ffffff !important;
+  }
+
+  .text-muted {
+    color: rgba(255, 255, 255, 0.7) !important;
+  }
+
+  .table-custom tbody tr:hover {
+    transform: translateY(-1px);
+    box-shadow: inset 0 0 0 1px rgba(255, 255, 255, 0.06);
+  }
+
+  @media (max-width: 768px) {
+
+    .card,
+    .filter-card,
+    .table-card {
+      border-radius: 20px;
+    }
+  }
 </style>
 
 {% endblock %}

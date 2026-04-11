@@ -2,178 +2,559 @@
 
 {% block content %}
 <style>
-/* Common Inputs Styling */
-form input,
-form select,
-form textarea {
-    border-radius:30px !important;       /* curved corners */
-    border: 2px solid #333;             /* dark border color */
-    padding: 8px 12px;
-    font-size: 14px;                       /* professional font size */
-    color: #0a0303;                           /* input text color */
-    width: 50%px;                           /* full width inside column */
-    box-sizing: border-box;
-    text-align: start;
-    margin-left: 20px;
-    font-weight: bold;
-    
-    
-}
+  @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap');
 
-/* Focus effect */
-form input:focus,
-form select:focus,
-form textarea:focus {
-    border-color: #007bff;                 /* blue focus */
-    box-shadow: 0 0 6px rgba(0, 123, 255, 0.3);
-    outline: none;
-}
+  * {
+    font-family: 'Poppins', sans-serif;
+  }
 
-/* Work Updates (Description) Box Adjustment */
-.col-md-6 textarea {
-    min-height: 350px;                     /* slightly taller */
-    width: 300px;
-    
-
-                      /* shift a bit right */
-}
-
-/* Checkboxes Styling */
-form .form-check input[type="checkbox"] {
-    width: 16px;
-    height: 16px;
-    margin-right: 50pxpx;
-    vertical-align: middle;
-    font-weight: bolder;
-}
-.card {
-    max-width: 850px;
-    margin: 0 auto;
-    padding: 40px;              /* reduced padding */
-    border-radius: 20px;
-    background: linear-gradient(-45deg, #d60909, #b5259d, #05b6cda8, #da5b11);
-    background-size: 400% 400%;
-    animation: gradientBG 15s ease infinite;
-    color: white;               /* card font color white */
-    font-weight: bold;          /* card font bold */
-    transition: all 0.3s ease;
-}
-/* Gradient animation */
-@keyframes gradientBG {
-    0% { background-position: 0% 50%; }
-    25% { background-position: 50% 50%; }
-    50% { background-position: 100% 50%; }
-    75% { background-position: 50% 50%; }
-    100% { background-position: 0% 50%; }
-}
-
-form .form-check {
-    display: flex;
-    align-items: center; 
-    margin-bottom: 5px;
-}
-
-form .form-check label {
-    margin-bottom: 0;
+  .form-control-custom {
+    border-radius: 10px;
+    border: 2px solid rgba(255, 255, 255, 0.15);
+    padding: 14px 18px;
     font-size: 14px;
-}
+    color: #fff;
+    width: 100%;
+    box-sizing: border-box;
+    font-weight: 600;
+    background: rgba(255, 255, 255, 0.08);
+    transition: all 0.3s ease;
+  }
 
-/* Card Padding Adjustment */
+  .form-control-custom::placeholder {
+    color: rgba(255, 255, 255, 0.5);
+    font-weight: 400;
+  }
 
-    
-      /* inner padding */
-    
+  .form-control-custom:hover {
+    border-color: rgba(0, 212, 255, 0.5);
+    background: rgba(255, 255, 255, 0.12);
+    box-shadow: 0 0 15px rgba(0, 212, 255, 0.2);
+  }
 
+  .form-control-custom:focus {
+    border-color: #00d4ff;
+    box-shadow: 0 0 20px rgba(0, 212, 255, 0.3);
+    background: rgba(255, 255, 255, 0.12);
+    outline: none;
+  }
 
+  .form-select-custom {
+    border-radius: 10px;
+    border: 2px solid rgba(255, 255, 255, 0.15);
+    padding: 14px 18px;
+    font-size: 14px;
+    color: #fff;
+    width: 100%;
+    box-sizing: border-box;
+    font-weight: 600;
+    background: rgba(255, 255, 255, 0.08);
+    transition: all 0.3s ease;
+    appearance: none;
+    background-image: url("data:image/svg+xml;charset=US-ASCII,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20width%3D%22292.4%22%20height%3D%22292.4%22%3E%3Cpath%20fill%3D%22%23ffffff%22%20d%3D%22M287%2069.4a17.6%2017.6%200%200%200-13-5.4H18.4c-5%200-9.3%201.8-12.9%205.4A17.6%2017.6%200%200%200%200%2082.2c0%205%201.8%209.3%205.4%2012.9l128%20127.9c3.6%203.6%207.8%205.4%2012.8%205.4s9.2-1.8%2012.8-5.4L287%2095c3.5-3.5%205.4-7.8%205.4-12.8%200-5-1.9-9.2-5.5-12.8z%22%2F%3E%3C%2Fsvg%3E");
+    background-repeat: no-repeat;
+    background-position: right 15px center;
+    background-size: 12px;
+  }
 
-.card:hover {
-    box-shadow: -100px 0 25px rgba(18, 3, 3, 0.25); /* stronger dark shadow on hover */
-    transform: translateY(-30px);   
-}
+  .form-select-custom:hover {
+    border-color: rgba(0, 212, 255, 0.5);
+    background: rgba(255, 255, 255, 0.12);
+    box-shadow: 0 0 15px rgba(0, 212, 255, 0.2);
+  }
 
-.mb-3{
-  margin-right: 40px;
-  font-weight: 500;
-  
-}
+  .form-select-custom option {
+    background: #1a1a2e;
+    color: #fff;
+  }
 
+  .form-textarea-custom {
+    border-radius: 10px;
+    border: 2px solid rgba(255, 255, 255, 0.15);
+    padding: 14px 18px;
+    font-size: 14px;
+    color: #fff;
+    width: 100%;
+    box-sizing: border-box;
+    font-weight: 600;
+    background: rgba(255, 255, 255, 0.08);
+    transition: all 0.3s ease;
+    min-height: 180px;
+    resize: vertical;
+  }
 
+  .form-textarea-custom:hover {
+    border-color: rgba(0, 212, 255, 0.5);
+    background: rgba(255, 255, 255, 0.12);
+    box-shadow: 0 0 15px rgba(0, 212, 255, 0.2);
+  }
 
+  .form-textarea-custom:focus {
+    border-color: #00d4ff;
+    box-shadow: 0 0 20px rgba(0, 212, 255, 0.3);
+    background: rgba(255, 255, 255, 0.12);
+    outline: none;
+  }
 
+  /* Legacy selector for compatibility */
+  form input,
+  form select,
+  form textarea {
+    border-radius: 10px;
+    border: 2px solid rgba(255, 255, 255, 0.15);
+    padding: 14px 18px;
+    font-size: 14px;
+    color: #fff;
+    width: 100%;
+    box-sizing: border-box;
+    font-weight: 600;
+    background: rgba(255, 255, 255, 0.08);
+    transition: all 0.3s ease;
+  }
+
+  form input:hover,
+  form select:hover,
+  form textarea:hover {
+    border-color: rgba(0, 212, 255, 0.5);
+    background: rgba(255, 255, 255, 0.12);
+    box-shadow: 0 0 15px rgba(0, 212, 255, 0.2);
+  }
+
+  form input::placeholder,
+  form textarea::placeholder {
+    color: rgba(255, 255, 255, 0.5);
+    font-weight: 400;
+  }
+
+  form input:focus,
+  form select:focus,
+  form textarea:focus {
+    border-color: #00d4ff;
+    box-shadow: 0 0 20px rgba(0, 212, 255, 0.3);
+    background: rgba(255, 255, 255, 0.12);
+    outline: none;
+  }
+
+  form select {
+    color: #fff;
+    appearance: none;
+    background-image: url("data:image/svg+xml;charset=US-ASCII,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20width%3D%22292.4%22%20height%3D%22292.4%22%3E%3Cpath%20fill%3D%22%23ffffff%22%20d%3D%22M287%2069.4a17.6%2017.6%200%200%200-13-5.4H18.4c-5%200-9.3%201.8-12.9%205.4A17.6%2017.6%200%200%200%200%2082.2c0%205%201.8%209.3%205.4%2012.9l128%20127.9c3.6%203.6%207.8%205.4%2012.8%205.4s9.2-1.8%2012.8-5.4L287%2095c3.5-3.5%205.4-7.8%205.4-12.8%200-5-1.9-9.2-5.5-12.8z%22%2F%3E%3C%2Fsvg%3E");
+    background-repeat: no-repeat;
+    background-position: right 15px center;
+    background-size: 12px;
+  }
+
+  form select option {
+    background: #1a1a2e;
+    color: #fff;
+  }
+
+  form textarea {
+    min-height: 180px;
+    resize: vertical;
+  }
+
+  .card {
+    max-width: 100%;
+    width: 100%;
+    margin: 0 auto;
+    border-radius: 24px;
+    background: linear-gradient(135deg, #1a1a2e 0%, #16213e 50%, #0f3460 100%);
+    color: white;
+    font-weight: 600;
+    transition: all 0.4s ease;
+    overflow: hidden;
+    position: relative;
+    border: 1px solid rgba(255, 255, 255, 0.1);
+  }
+
+  .card::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(180deg, rgba(0, 212, 255, 0.08) 0%, transparent 50%);
+    z-index: 0;
+  }
+
+  .card:hover {
+    box-shadow: 0 30px 60px rgba(0, 0, 0, 0.5), 0 0 40px rgba(0, 212, 255, 0.2);
+    transform: translateY(-5px);
+  }
+
+  .card-header {
+    position: relative;
+    padding: 20px 30px;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+    z-index: 1;
+  }
+
+  .card-header::after {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    height: 3px;
+    background: linear-gradient(90deg, #00d4ff, #8b5cf6, #ec4899, #06b6d4, #00d4ff);
+    background-size: 300% 100%;
+    animation: shimmer 8s linear infinite;
+  }
+
+  @keyframes shimmer {
+    0% {
+      background-position: -300% 0;
+    }
+
+    100% {
+      background-position: 300% 0;
+    }
+  }
+
+  .card-header h3 {
+    margin: 0;
+    font-size: 24px;
+    font-weight: 700;
+    background: linear-gradient(90deg, #00d4ff, #06b6d4);
+    -webkit-background-clip: text;
+    -moz-background-clip: text;
+    background-clip: text;
+    -webkit-text-fill-color: transparent;
+    -moz-text-fill-color: transparent;
+    color: transparent;
+  }
+
+  .card-body {
+    position: relative;
+    z-index: 1;
+    padding: 20px 25px;
+  }
+
+  .form-label {
+    color: #00d4ff;
+    font-weight: 700;
+    font-size: 14px;
+    text-transform: uppercase;
+    letter-spacing: 1.5px;
+    margin-bottom: 8px;
+    display: block;
+    transition: all 0.3s ease;
+    cursor: pointer;
+  }
+
+  .form-label:hover {
+    color: #ff0080;
+    text-shadow: 0 0 15px rgba(255, 0, 128, 0.6);
+    transform: translateX(5px);
+  }
+
+  .form-label::before {
+    content: '◆';
+    margin-right: 8px;
+    font-size: 10px;
+  }
+
+  .row {
+    --bs-gutter-x: 1.5rem;
+  }
+
+  .col-md-6 {
+    padding-right: 20px;
+    padding-left: 20px;
+  }
+
+  .col-md-6:first-child {
+    border-right: 1px solid rgba(255, 255, 255, 0.1);
+  }
+
+  .mb-3 {
+    margin-bottom: 15px !important;
+    padding: 10px;
+    border-radius: 12px;
+    transition: all 0.3s ease;
+  }
+
+  .mb-3:hover {
+    background: rgba(0, 212, 255, 0.08);
+    box-shadow: 0 0 20px rgba(0, 212, 255, 0.15);
+    transform: scale(1.01);
+  }
+
+  .labour-tags-wrapper {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 8px;
+    padding: 16px 12px 12px 12px;
+    background: rgba(255, 255, 255, 0.05);
+    border-radius: 12px;
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    width: 100%;
+    box-sizing: border-box;
+  }
+
+  .labour-tag {
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: flex-start;
+    gap: 8px;
+    padding: 10px 12px;
+    background: rgba(255, 255, 255, 0.08);
+    border-radius: 10px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    border: 1px solid transparent;
+  }
+
+  .labour-tag:hover {
+    background: rgba(0, 150, 255, 0.2);
+    border-color: rgba(0, 150, 255, 0.5);
+    transform: translateY(-2px);
+    box-shadow: 0 5px 20px rgba(0, 150, 255, 0.3);
+  }
+
+  .labour-tag input[type="checkbox"] {
+    -webkit-appearance: none;
+    appearance: none;
+    width: 20px;
+    height: 20px;
+    min-width: 20px;
+    border: 2px solid rgba(255, 255, 255, 0.4);
+    border-radius: 5px;
+    background: transparent;
+    cursor: pointer;
+    position: relative;
+    transition: all 0.3s ease;
+    margin: 0;
+  }
+
+  .labour-tag input[type="checkbox"]:hover {
+    border-color: #00d4ff;
+    box-shadow: 0 0 15px rgba(0, 212, 255, 0.5);
+    transform: scale(1.1);
+  }
+
+  .labour-tag input[type="checkbox"]:checked {
+    background: linear-gradient(135deg, #00d4ff, #06b6d4);
+    border-color: #00d4ff;
+    box-shadow: 0 0 15px rgba(0, 212, 255, 0.6);
+  }
+
+  .labour-tag input[type="checkbox"]:checked::after {
+    content: '✓';
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    color: white;
+    font-size: 12px;
+    font-weight: bold;
+  }
+
+  .labour-tag:has(input:checked) {
+    background: rgba(0, 212, 255, 0.15);
+    border-color: rgba(0, 212, 255, 0.5);
+  }
+
+  .labour-tag:has(input:checked) span {
+    color: #06b6d4;
+    font-weight: 700;
+  }
+
+  .labour-tag span {
+    margin: 0;
+    color: rgba(255, 255, 255, 0.9);
+    font-size: 14px;
+    font-weight: 600;
+    pointer-events: none;
+  }
+
+  .btn {
+    padding: 14px 35px;
+    font-weight: 700;
+    font-size: 14px;
+    text-transform: uppercase;
+    letter-spacing: 1.5px;
+    transition: all 0.3s ease;
+    border: none;
+    border-radius: 50px;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .btn:hover {
+    transform: translateY(-3px) scale(1.05);
+  }
+
+  .btn::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: -100%;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.3), transparent);
+    transition: 0.5s;
+  }
+
+  .btn:hover::before {
+    left: 100%;
+  }
+
+  .btn-success {
+    background: linear-gradient(135deg, #22c55e, #16a34a, #15803d, #22c55e);
+    background-size: 300% 100%;
+    color: white;
+    box-shadow: 0 5px 20px rgba(34, 197, 94, 0.4);
+    border: none;
+    animation: btnGreenShine 4s ease infinite;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .btn-success::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: -100%;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(90deg, transparent, rgba(255,255,255,0.3), transparent);
+    transition: 0.5s;
+  }
+
+  .btn-success:hover {
+    transform: translateY(-3px) scale(1.05);
+    box-shadow: 0 15px 40px rgba(34, 197, 94, 0.6), 0 0 30px rgba(34, 197, 94, 0.4);
+    animation: btnGreenShine 2s ease infinite;
+  }
+
+  .btn-success:hover::before {
+    left: 100%;
+  }
+
+  .btn-primary {
+    background: linear-gradient(135deg, #ff6a00, #ee0979, #00c6ff, #ff6a00);
+    background-size: 300% 100%;
+    color: white;
+    box-shadow: 0 5px 20px rgba(255, 106, 0, 0.4);
+    border: none;
+    animation: btnColorShine 4s ease infinite;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .btn-primary::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: -100%;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(90deg, transparent, rgba(255,255,255,0.3), transparent);
+    transition: 0.5s;
+  }
+
+  .btn-primary:hover {
+    transform: translateY(-3px) scale(1.05);
+    box-shadow: 0 15px 40px rgba(255, 106, 0, 0.6), 0 0 30px rgba(238, 9, 121, 0.4);
+    animation: btnColorShine 2s ease infinite;
+  }
+
+  .btn-primary:hover::before {
+    left: 100%;
+  }
+
+  @keyframes btnGreenShine {
+    0% { background-position: 0% 50%; }
+    50% { background-position: 100% 50%; }
+    100% { background-position: 0% 50%; }
+  }
+
+  @keyframes btnColorShine {
+    0% { background-position: 0% 50%; }
+    50% { background-position: 100% 50%; }
+    100% { background-position: 0% 50%; }
+  }
 </style>
 
-
 <div class="container my-5">
-  <div class="card shadow-lg border-0 rounded-4 p-4">
+  <div class="card shadow-lg border-0 rounded-4">
+    <div class="card-header">
+      <h3 class="mb-0 fw-bold">Add Work Detail</h3>
+    </div>
+    <div class="card-body">
 
-    <h3 class="mb-4 fw-bold" style="margin-top: 10px ;">Add Work Detail</h3>
+      <form method="POST">
+        {% csrf_token %}
 
-    <form method="POST">
-      {% csrf_token %}
+        <div class="row g-3">
 
-      <div class="row g-3">
+          <!-- Left Column -->
+          <div class="col-md-6">
+            <div class="mb-3">
+              <label class="form-label">Date</label>
+              {{ form.date }}
+            </div>
 
-        <!-- Left Column (Most Fields) -->
-        <div class="col-md-6" style="font-weight: 600;">
-
-          <div class="mb-3">
-            <label class="form-label">Date</label>
-            {{ form.date }}
-          </div>
-
-          <div class="mb-3">
-           <label class="form-label">Vendor</label>
+            <div class="mb-3">
+              <label class="form-label">Vendor</label>
               {{ form.vendor }}
+            </div>
+
+            <div class="mb-3">
+              <label class="form-label">Site</label>
+              {{ form.site }}
+            </div>
+
+            <div class="mb-3">
+              <label class="form-label">Check In</label>
+              {{ form.check_in }}
+            </div>
+
+            <div class="mb-3">
+              <label class="form-label">Check Out</label>
+              {{ form.check_out }}
+            </div>
           </div>
 
-          <div class="mb-3">
-            <label class="form-label">Site</label>
-            {{ form.site }}
+          <!-- Right Column -->
+          <div class="col-md-6">
+            <div class="mb-3">
+              <label class="form-label">Material Details</label>
+              {{ form.material_description }}
+            </div>
+
+            <div class="mb-3">
+              <label class="form-label">Labours</label>
+              <div class="labour-tags-wrapper">
+                {% for choice in form.labours %}
+                <label class="labour-tag">
+                  {{ choice.tag }}
+                  <span>{{ choice.choice_label }}</span>
+                </label>
+                {% endfor %}
+              </div>
+            </div>
           </div>
 
-          <div class="mb-3">
-            <label class="form-label">Labours</label>
-            {{ form.labours }}
-          </div>
-
-          <div class="mb-3">
-            <label class="form-label">Check In</label>
-            {{ form.check_in }}
-          </div>
-
-          <div class="mb-3">
-            <label class="form-label">Check Out</label>
-            {{ form.check_out }}
+          <div class="col-12">
+            <div class="mb-3">
+              <label class="form-label">Work Updates</label>
+              {{ form.work_description }}
+            </div>
           </div>
 
         </div>
 
-        <!-- Right Column (Only Description) -->
-        <div class="col-md-6" style="font-weight: 600;">
-          <div class="mb-3">
-            <label class="form-label">Work Updates </label>
-            <br>
-            {{ form.work_description }}
-          </div>
-        </div>
-        <div class="mb-3">
-          <label class="form-label">Material Details</label>  
-           <br>
-             {{ form.material_description }}
+        <!-- Buttons -->
+        <div class="mt-4 text-end">
+          <button type="submit" class="btn btn-success px-4 rounded-pill">Save</button>
+          <a href="{% url 'workdetail_list' %}" class="btn btn-primary px-4 rounded-pill">View Details</a>
         </div>
 
-      </div>
-
-      <!-- Buttons -->
-      <div class="mt-4 text-end">
-        <button type="submit" class="btn btn-success px-4 rounded-pill">Save</button>
-        <a href="{% url 'workdetail_list' %}" class="btn btn-primary px-4 rounded-pill">View Details</a>
-      </div>
-
-    </form>
+      </form>
+    </div>
   </div>
 </div>
-
-
 
 {% endblock %}

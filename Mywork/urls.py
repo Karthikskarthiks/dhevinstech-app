@@ -19,10 +19,13 @@ urlpatterns = [
 
     # WorkDetail Pages
     path('list/', views.workdetail_list, name='workdetail_list'),
+    path('detail/<int:pk>/', views.workdetail_detail, name='workdetail_detail'),
     path('edit/<int:pk>/', views.edit_workdetail, name='edit_workdetail'),
     path('delete/<int:pk>/', views.delete_workdetail, name='delete_workdetail'),
     path('export/csv/', views.export_workdetails_csv, name='export_workdetails_csv'),
 
+    # Favicon
+    path('favicon.ico', views.favicon, name='favicon'),
 
     # API Routes
     path('api/', include(router.urls)),

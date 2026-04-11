@@ -1,0 +1,405 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+<div class="container my-4" style="width: 98%;">
+  <div class="mb-4">
+    <a href="{% url 'workdetail_list' %}" class="btn btn-primary">← Back to List</a>
+  </div>
+  <div class="card shadow-lg border-0 rounded-4 detail-card">
+    <div class="card-header">
+      <div class="d-flex flex-column flex-md-row justify-content-between align-items-start gap-3">
+        <div>
+          <h3 class="mb-0 fw-bold">Work Detail</h3>
+          <p class="mb-0 text-muted">A clean neon-accent summary of this work record.</p>
+        </div>
+        <div class="d-flex gap-2 flex-wrap">
+          <a href="{% url 'edit_workdetail' workdetail.id %}" class="btn btn-success">Edit</a>
+          <a href="{% url 'delete_workdetail' workdetail.id %}" class="btn btn-danger"
+            onclick="return confirm('Delete this record?');">Delete</a>
+        </div>
+      </div>
+    </div>
+
+    <div class="card-body">
+      <div class="row g-3">
+        <div class="col-12 col-md-4 col-lg-4">
+          <div class="info-panel">
+            <div class="info-label">Date</div>
+            <div class="info-value">
+              <span class="chip chip-date">{{ workdetail.date }}</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="col-12 col-md-4 col-lg-4">
+          <div class="info-panel">
+            <div class="info-label">Vendor</div>
+            <div class="info-value">
+              {% if workdetail.vendor %}
+              <span class="chip chip-vendor">{{ workdetail.vendor.name }}</span>
+              {% else %}
+              <span class="text-muted">-</span>
+              {% endif %}
+            </div>
+          </div>
+        </div>
+
+        <div class="col-12 col-md-4 col-lg-4">
+          <div class="info-panel">
+            <div class="info-label">Site</div>
+            <div class="info-value">
+              {% if workdetail.site %}
+              <div class="d-flex justify-content-between align-items-center">
+                <div>
+                  <span class="chip chip-site">{{ workdetail.site.site_name }}</span>
+                </div>
+                <div>
+                  <span class="chip chip-location">{{ workdetail.site.location }}</span>
+                </div>
+              </div>
+              {% else %}
+              <span class="text-muted">-</span>
+              {% endif %}
+            </div>
+          </div>
+        </div>
+
+        <div class="col-12 col-lg-6">
+          <div class="info-panel">
+            <div class="info-label">Labour</div>
+            <div class="info-value labour-list">
+              {% for labour in workdetail.labours.all %}
+              <span class="chip chip-labour">{{ labour.name }}</span>
+              {% empty %}
+              <span class="text-muted">-</span>
+              {% endfor %}
+            </div>
+          </div>
+        </div>
+
+        <div class="col-12 col-lg-6">
+          <div class="info-panel">
+            <div class="info-label">Check In & Out</div>
+            <div class="info-value d-flex justify-content-around">
+              <div>
+                <strong>Check In:</strong>
+                {% if workdetail.check_in %}
+                <span class="chip chip-success ms-2">{{ workdetail.check_in|date:"h:i A" }}</span>
+                {% else %}
+                <span class="text-muted ms-2">-</span>
+                {% endif %}
+              </div>
+              <div>
+                <strong>Check Out:</strong>
+                {% if workdetail.check_out %}
+                <span class="chip chip-danger ms-2">{{ workdetail.check_out|date:"h:i A" }}</span>
+                {% else %}
+                <span class="text-muted ms-2">-</span>
+                {% endif %}
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="col-12 col-lg-6">
+          <div class="info-panel info-panel-lg">
+            <div class="info-label">Work Updates</div>
+            <div class="info-value work-text">{{ workdetail.work_description|linebreaksbr }}</div>
+          </div>
+        </div>
+
+        <div class="col-12 col-lg-6">
+          <div class="info-panel info-panel-lg">
+            <div class="info-label">Material Details</div>
+            <div class="info-value work-text">
+              {% if workdetail.material_description %}
+              {{ workdetail.material_description|linebreaksbr }}
+              {% else %}
+              <span class="text-muted">-</span>
+              {% endif %}
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+</div>
+</div>
+
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap');
+
+  * {
+    font-family: 'Poppins', sans-serif;
+  }
+
+  .detail-card {
+    max-width: 100%;
+    width: 100%;
+    margin: 0 auto;
+    border-radius: 24px;
+    background: linear-gradient(135deg, #1a1a2e 0%, #16213e 50%, #0f3460 100%);
+    color: white;
+    transition: all 0.4s ease;
+    overflow: hidden;
+    position: relative;
+    border: 1px solid rgba(255, 255, 255, 0.1);
+  }
+
+  .detail-card::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(180deg, rgba(0, 212, 255, 0.08) 0%, transparent 50%);
+    z-index: 0;
+  }
+
+  .detail-card:hover {
+    box-shadow: 0 30px 60px rgba(0, 0, 0, 0.5), 0 0 40px rgba(0, 212, 255, 0.2);
+    transform: translateY(-3px);
+  }
+
+  .card-header {
+    position: relative;
+    padding: 20px 30px;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+    z-index: 1;
+  }
+
+  .card-header::after {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    height: 3px;
+    background: linear-gradient(90deg, #00d4ff, #8b5cf6, #ec4899, #06b6d4, #00d4ff);
+    background-size: 300% 100%;
+    animation: shimmer 8s linear infinite;
+  }
+
+  .card-header h3 {
+    color: #ffffff;
+    transition: all 0.3s ease;
+  }
+
+  .card-header h3:hover {
+    color: #00d4ff;
+    text-shadow: 0 0 10px rgba(0, 212, 255, 0.5);
+  }
+
+  .card-header p {
+    color: #ffffff !important;
+    transition: all 0.3s ease;
+  }
+
+  .card-header p:hover {
+    color: #00d4ff !important;
+  }
+
+  @keyframes shimmer {
+    0% {
+      background-position: -300% 0;
+    }
+
+    100% {
+      background-position: 300% 0;
+    }
+  }
+
+  .card-body {
+    position: relative;
+    z-index: 1;
+    padding: 20px 25px;
+  }
+
+  .info-panel {
+    background: rgba(255, 255, 255, 0.04);
+    border: 1px solid rgba(255, 255, 255, 0.08);
+    border-radius: 20px;
+    padding: 22px;
+    min-height: 150px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+  }
+
+  .info-panel-lg {
+    min-height: 200px;
+    justify-content: flex-start;
+  }
+
+  .info-label {
+    color: #00d4ff;
+    font-size: 0.75rem;
+    font-weight: 700;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    margin-bottom: 0.85rem;
+  }
+
+  .info-value {
+    color: #f8fafc;
+    font-size: 1rem;
+    line-height: 1.75;
+  }
+
+  .chip {
+    display: inline-flex;
+    align-items: center;
+    border-radius: 999px;
+    padding: 0.55rem 0.95rem;
+    font-size: 0.85rem;
+    font-weight: 700;
+    margin: 0 0.35rem 0.35rem 0;
+  }
+
+  .chip-vendor {
+    background: #7c3aed;
+    color: #ffffff;
+  }
+
+  .chip-date {
+    background: #f59e0b;
+    color: #ffffff;
+  }
+
+  .chip-site {
+    background: #06b6d4;
+    color: #ffffff;
+  }
+
+  .chip-location {
+    background: #14b8a6;
+    color: #ffffff;
+  }
+
+  .chip-labour {
+    background: #0ea5e9;
+    color: #0f172a;
+  }
+
+  .chip-success {
+    background: #22c55e;
+    color: #ffffff;
+  }
+
+  .chip-danger {
+    background: #ef4444;
+    color: #ffffff;
+  }
+
+  .chip:hover {
+    transform: scale(1.05);
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+    transition: all 0.3s ease;
+  }
+
+  .labour-list {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.4rem;
+  }
+
+  .work-text {
+    white-space: pre-line;
+  }
+
+  .btn {
+    padding: 14px 35px;
+    font-weight: 700;
+    font-size: 14px;
+    text-transform: uppercase;
+    letter-spacing: 1.5px;
+    transition: all 0.3s ease;
+    border: none;
+    border-radius: 50px;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .btn::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: -100%;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.3), transparent);
+    transition: 0.5s;
+  }
+
+  .btn:hover::before {
+    left: 100%;
+  }
+
+  .btn-success {
+    background: linear-gradient(135deg, #22c55e, #16a34a, #15803d, #22c55e);
+    background-size: 300% 100%;
+    color: white;
+    box-shadow: 0 5px 20px rgba(34, 197, 94, 0.4);
+    animation: btnGreenShine 4s ease infinite;
+  }
+
+  .btn-danger {
+    background: linear-gradient(135deg, #ef4444, #dc2626, #b91c1c, #ef4444);
+    background-size: 300% 100%;
+    color: white;
+    box-shadow: 0 5px 20px rgba(239, 68, 68, 0.4);
+  }
+
+  .btn-primary {
+    background: linear-gradient(135deg, #3b82f6, #2563eb, #1d4ed8, #3b82f6);
+    background-size: 300% 100%;
+    color: white;
+    box-shadow: 0 5px 20px rgba(59, 130, 246, 0.4);
+    animation: btnBlueShine 4s ease infinite;
+  }
+
+  .btn-success:hover,
+  .btn-danger:hover,
+  .btn-primary:hover {
+    transform: translateY(-3px) scale(1.05);
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+  }
+
+  @keyframes btnGreenShine {
+    0% {
+      background-position: 0% 50%;
+    }
+
+    50% {
+      background-position: 100% 50%;
+    }
+
+    100% {
+      background-position: 0% 50%;
+    }
+  }
+
+  @keyframes btnBlueShine {
+    0% {
+      background-position: 0% 50%;
+    }
+
+    50% {
+      background-position: 100% 50%;
+    }
+
+    100% {
+      background-position: 0% 50%;
+    }
+  }
+
+  @media (max-width: 768px) {
+
+    .info-panel,
+    .info-panel-lg {
+      min-height: auto;
+    }
+  }
+</style>
+
+{% endblock %}

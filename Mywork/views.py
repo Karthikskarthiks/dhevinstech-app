@@ -12,7 +12,7 @@ import csv
 from .models import Labour
 
 def keep_alive(request):
-    Labour.objects.count()   # DB hit 🔥
+    Labour.objects.count()   # DB hit 
     return HttpResponse("DB Alive")
 
 # ------------------------------
@@ -102,6 +102,12 @@ def delete_workdetail(request, pk):
     return redirect('workdetail_list')
 
 
+def workdetail_detail(request, pk):
+    """View a single WorkDetail."""
+    workdetail = get_object_or_404(WorkDetail.objects.select_related('vendor', 'site').prefetch_related('labours'), pk=pk)
+    return render(request, 'workdetail_detail.html', {'workdetail': workdetail})
+
+
 # ------------------------------
 # CSV Export (Backup)
 # ------------------------------
@@ -131,3 +137,11 @@ def export_workdetails_csv(request):
         ])
 
     return response
+
+
+# Favicon view to prevent 404 errors
+def favicon(request):
+    """Serve a simple favicon to prevent 404 errors."""
+    # Create a simple 16x16 transparent favicon
+    favicon_data = b'\x00\x00\x01\x00\x01\x00\x10\x10\x00\x00\x01\x00 \x00h\x04\x00\x00\x16\x00\x00\x00(\x00\x00\x00\x10\x00\x00\x00 \x00\x00\x00\x01\x00 \x00\x00\x00\x00\x00\x00\x04\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00'
+    return HttpResponse(favicon_data, content_type='image/x-icon')
